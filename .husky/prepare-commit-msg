@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+
+. "$(dirname -- "$0")/_/husky.sh"
+
+Commitizen () {
+  if [ -d "$(git rev-parse --git-path rebase-apply)" ]; then
+      echo "[INFO] A rebase action is in progress. Skipping Commitizen hook ⏩"
+      exit 0
+  fi
+
+  if [ -n "$GIT_CHERRY_PICK_MODE" ]; then
+      echo "[INFO] Cherry-pick in progress. Skipping Commitizen hook ⏩"
+      exit 0
+  fi
+
+  if [ -z "$(git status --porcelain)" ]; then
+      if [ "$(git rev-parse HEAD)" != "$(git rev-parse 'HEAD@{1}')" ]; then
+          if git merge-base --is-ancestor HEAD "HEAD@{1}"; then
+              echo "[INFO] A git fast-forward action is in progress. Skipping Commitizen hook ⏩"
+              exit 0
+          fi
+      fi
+  fi
+
+  if {
+    exec < /dev/tty &&
+    yarn cz --hook &&
+    true
+  }; then
+    return 0
+  else
+    echo "[ERROR] ❌ Failed to execute Commitizen!"
+    return 1
+  fi
+}
+
+Commitizen

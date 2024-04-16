@@ -1,0 +1,111 @@
+{
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.2.2",
+    "branch-name-lint": "^2.1.1",
+    "commitizen": "^4.3.0",
+    "commitlint": "^19.2.2",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "cz": "cz",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --cache --fix",
+    "*.{js,ts,css,md}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog",
+      "types": {
+        "feat": {
+          "title": "feat",
+          "description": "Introduces a new feature"
+        },
+        "fix": {
+          "title": "fix",
+          "description": "Proposes a bug fix"
+        },
+        "docs": {
+          "title": "docs",
+          "description": "Updates or adds new documentation"
+        },
+        "style": {
+          "title": "style",
+          "description": "Adjusts code formatting, whitespace, or styling"
+        },
+        "refactor": {
+          "title": "refactor",
+          "description": "Improves code structure, readability, or performance without changing its external behavior"
+        },
+        "perf": {
+          "title": "perf",
+          "description": "Optimizes code for improved performance, efficiency, and resource utilization"
+        },
+        "test": {
+          "title": "test",
+          "description": "Adds new tests or updates existing ones"
+        },
+        "build": {
+          "title": "build",
+          "description": "Changes that affect the build system or external dependencies (npm, yarn, docker)"
+        },
+        "ci": {
+          "title": "ci",
+          "description": "Changes to our CI configuration files and scripts (github actions workflow, codebuild)"
+        },
+        "chore": {
+          "title": "chore",
+          "description": "Other changes that do not modify /src or test files (.gitignore, auto generated files)"
+        },
+        "revert": {
+          "title": "revert",
+          "description": "Reverts a previous commit"
+        },
+        "merge": {
+          "title": "merge",
+          "description": "Merges a branch into another"
+        }
+      }
+    },
+    "branchNameLinter": {
+      "regex": "^[a-zA-Z0-9_-]+$",
+      "msgDoesNotMatchRegex": "Branch \"%s\" does not match the allowed pattern: \"%s\".",
+      "prefixes": [
+        "feature",
+        "hotfix",
+        "release",
+        "prerelease",
+        "epic",
+        "dependabot"
+      ],
+      "suggestions": {
+        "feat": "feature",
+        "features": "feature",
+        "fix": "hotfix",
+        "pre-release": "prerelease",
+        "releases": "release",
+        "skip": "skip-ci"
+      },
+      "banned": [
+        "wip"
+      ],
+      "skip": [
+        "skip-ci"
+      ],
+      "disallowed": [
+        "master",
+        "main",
+        "develop"
+      ],
+      "separator": "/",
+      "msgBranchBanned": "Branches with the name \"%s\" are not allowed.",
+      "msgBranchDisallowed": "Pushing to \"%s\" is not allowed, use git-flow.",
+      "msgPrefixNotAllowed": "Branch prefix \"%s\" is not allowed.",
+      "msgPrefixSuggestion": "Instead of \"%s\" try \"%s\".",
+      "msgseparatorRequired": "Branch \"%s\" must contain a separator \"%s\"."
+    }
+  }
+}
