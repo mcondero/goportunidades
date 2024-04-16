@@ -16,3 +16,8 @@
 # Db folder
 
 db/
+
+# node_modules
+
+node_modules
+.husky/_
